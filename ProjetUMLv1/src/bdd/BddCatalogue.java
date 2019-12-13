@@ -6,7 +6,7 @@ import domaine.Produit;
 import domaine.Categorie;
 import java.util.*;
 public class BddCatalogue {
-	static LinkedList<Produit> getProduits() {
+	public static LinkedList<Produit> getProduits() {
 		Connection lien = LienBdd.connect();
 		ResultSet rs = null;
 		String sql = "Select * from Produit where enVente = 1;";
@@ -22,7 +22,7 @@ public class BddCatalogue {
 		catch(SQLException e){System.out.println(e);}
 		return ListeP;
 	}
-	static LinkedList<Categorie> getCategories() {
+	public static LinkedList<Categorie> getCategories() {
 		Connection lien = LienBdd.connect();
 		ResultSet rs = null;
 		LinkedList<Categorie> ListeC = new LinkedList<Categorie>();
