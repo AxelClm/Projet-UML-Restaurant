@@ -8,7 +8,6 @@ public class Commande {
 	
 	private int numCom;
 	private LinkedList<LigneProduit> listeLp;
-	private Catalogue c;
 	private boolean reccup;
 	//table
 	//date
