@@ -6,7 +6,7 @@ public class LienBdd {
 	public static Connection connect() {
 		Connection lien = null;
 		try {
-			String url = "jdbc:sqlite:src/bdd/BaseDeDonnée.db";
+			String url = "jdbc:sqlite:ProjetUMLv1/src/bdd/BaseDeDonnée.db";
 			lien = DriverManager.getConnection(url);
 		}
 		catch (SQLException e) {

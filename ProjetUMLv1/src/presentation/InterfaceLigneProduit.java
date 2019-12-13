@@ -2,7 +2,6 @@ package presentation;
 
 //import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,37 +11,26 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 //import javax.swing.JCheckBox;
 import javax.swing.JButton;
-
+import domaine.Produit;
 @SuppressWarnings("serial")
 public class InterfaceLigneProduit extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JLabel label;
 	private JTextField textField_1;
 	private JComboBox comboBox;
 	private JButton btnNewButton;
+	private Produit produit;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfaceLigneProduit frame = new InterfaceLigneProduit();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public InterfaceLigneProduit() {
+	public InterfaceLigneProduit(Produit produit) {
+		this.produit = produit;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 401, 488);
 		contentPane = new JPanel();
@@ -50,10 +38,9 @@ public class InterfaceLigneProduit extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(75, 43, 189, 22);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		label = new JLabel(produit.getNom());
+		label.setBounds(75, 43, 189, 22);
+		contentPane.add(label);
 		
 		JLabel lblQuantit = new JLabel("Quantit\u00E9");
 		lblQuantit.setBounds(54, 128, 56, 16);
