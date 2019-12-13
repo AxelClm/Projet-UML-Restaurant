@@ -8,18 +8,20 @@ public class Commande {
 	
 	private int numCom;
 	private LinkedList<LigneProduit> listeLp;
-	private boolean reccup;
+	private boolean reccup = false;
 	//table
 	//date
 	//private int numServ;
 	
-	
-	
-	public Commande(ResultSet rS) throws SQLException {
+	public Commande(ResultSet rS,int numCom) throws SQLException {
+		listeLp = new LinkedList<LigneProduit>();
 		while(rS.next()) {
-			//faire pour chaque row rs.getInt() pr l'entier ect.
-			//Seulement utilisé par BddCom.getCommande()
+			int numP = rS.getInt("idProduit");
+			int qte = rS.getInt("qte");
+			String opt = rS.getString("Optiion");
+			ajouterProduit(numP,qte,opt);
 		}
+		this.numCom=numCom;
 		reccup = true;
 	}
 	public Commande(){

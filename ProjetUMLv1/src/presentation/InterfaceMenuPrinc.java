@@ -3,9 +3,12 @@ package presentation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import domaine.Catalogue;
 
 public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 
+	Catalogue cata;
+	
 	JLabel titre = new JLabel("Gestion du restaurant");
 	JButton crc = new JButton("Commencer une commande");
 	JButton mdc = new JButton("Modifier une commande");
@@ -18,17 +21,14 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 	JLabel nca = new JLabel("N° com :");
 	JTextField nc = new JTextField();
 
-	JLabel errc = new JLabel("Erreur : numéro de commande déjà pris");
 	JLabel errm = new JLabel("Erreur : numéro de commande non trouvé");
-	JLabel crca = new JLabel("Commencer une commande");
 	JLabel mdca = new JLabel("Modifier une commande");
 
-	boolean c = false;
 	boolean m = false;
-	boolean cr = false;
 	boolean mr = false;
 	
-	InterfaceMenuPrinc(){
+	public InterfaceMenuPrinc(Catalogue cata){
+		this.cata=cata;
 		setLocation(300,0);
 		setSize(900,1030);
 		crc.addActionListener(this);
@@ -82,10 +82,6 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     	nc.setLocation(292,480);
     	remove(nc);
 
-    	crca.setFont(new Font("Plain",Font.PLAIN,25));
-    	crca.setLocation(290,320);
-    	remove(crca);
-
     	valider.setSize(100,50);
     	valider.setLocation(425,650);
     	remove(valider);
@@ -93,10 +89,6 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     	mdca.setFont(new Font("Plain",Font.PLAIN,25));
     	mdca.setLocation(320,320);
     	remove(mdca);
-
-    	errc.setFont(new Font("Plain",Font.PLAIN,25));
-    	errc.setLocation(225,450);
-    	remove(errc);
 
     	errm.setFont(new Font("Plain",Font.PLAIN,25));
     	errm.setLocation(215,450);
@@ -106,23 +98,6 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     	retour.setLocation(420,540);
     	remove(retour);
 
-
-    	if(c==true){
-
-    		remove(crc);
-    		remove(mdc);
-    		remove(opt);
-    		remove(quit);
-    		add(clo);
-    		add(nca);
-    		add(nc);
-    		add(crca);
-    		add(valider);
-    		g.setColor(new Color(204,204,204));
-    		g.fillRect(275,275,400,450);
-
-
-    	}
 
     	if(m==true){
     		
@@ -137,23 +112,6 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     		add(valider);
     		g.setColor(new Color(204,204,204));
     		g.fillRect(275,275,400,450);
-    	}
-
-    	if(cr==true){
-
-    		remove(crc);
-    		remove(mdc);
-    		remove(opt);
-    		remove(quit);
-    		remove(clo);
-    		remove(nca);
-    		remove(nc);
-    		remove(mdca);
-    		remove(valider);
-    		add(errc);
-    		add(retour);
-    		g.setColor(new Color(204,204,204));
-    		g.fillRect(175,360,600,250);
     	}
 
         if(mr==true){
@@ -183,16 +141,13 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 
     	if(source==clo){
 
-    		c = false;
     		m = false;
     		repaint();
     	}
 
     	if(source==crc){
 
-    		c=true;
-    		repaint();
-
+ 
     	}
 
     	if(source == mdc){
@@ -211,12 +166,9 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     		//if(c==true) appeler fonction de création
     		//else if(m==true) appeler fonction de recherche
 
-    		if(c==true)
-    			cr=true;
     		if(m==true)
     			mr=true;
 
-    		c=false;
     		m=false;
 
     		repaint();
@@ -225,7 +177,6 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 
     	if(source == retour){
 
-    		cr=false;
     		mr=false;
 
     		repaint();
