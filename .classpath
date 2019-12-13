@@ -5,5 +5,5 @@
 	<classpathentry kind="lib" path="ProjetUMLv1/librairies/sqlite-jdbc-3.27.2.1.jar"/>
 	<classpathentry kind="lib" path="ProjetUMLv1/librairies/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="ProjetUMLv1/librairies/jgoodies-forms-1.8.0.jar"/>
-	<classpathentry kind="output" path="Interface_Modelisation/bin"/>
+	<classpathentry kind="output" path="ProjetUMLv1/bin"/>
 </classpath>
