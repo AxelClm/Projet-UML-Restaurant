@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import domaine.Catalogue;
 import domaine.Categorie;
 import domaine.Produit;
+import domaine.Commande;
 @SuppressWarnings("serial")
 public class InterfaceCommander extends JFrame {
 
@@ -28,27 +29,15 @@ public class InterfaceCommander extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfaceCommander frame = new InterfaceCommander();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public void generateButton(String nom,JPanel panel,Produit p) {
+	public void generateButton(String nom,JPanel panel,Produit p,Commande commande) {
 		JButton btnNewButton = new JButton(nom);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InterfaceLigneProduit t = new InterfaceLigneProduit(p);
+				InterfaceLigneProduit t = new InterfaceLigneProduit(p,commande);
 				t.setVisible(true);
 			}
 		});
@@ -60,7 +49,7 @@ public class InterfaceCommander extends JFrame {
 		jpanel.setLayout(new GridLayout(0,3));
 		return jpanel;
 	}
-	public InterfaceCommander() {
+	public InterfaceCommander(Catalogue c ,Commande commande) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 816, 540);
 		contentPane = new JPanel();
@@ -70,13 +59,12 @@ public class InterfaceCommander extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(12, 118, 508, 347);
 		contentPane.add(tabbedPane);
-		Catalogue c = new Catalogue();
 		LinkedList<Categorie> listeC = c.getListeCategorie();
 		listeC.forEach(cat -> {
 			LinkedList<Produit> listeProd = c.getProduitByCategorie(cat.getIdCategorie());
 			JPanel panel = generatePanel(tabbedPane,cat.getNomCategorie());
 			listeProd.forEach(prod -> {
-				generateButton(prod.getNom(),panel,prod);
+				generateButton(prod.getNom(),panel,prod,commande);
 			});
 		});
 		//Entrées.setLayout(null);

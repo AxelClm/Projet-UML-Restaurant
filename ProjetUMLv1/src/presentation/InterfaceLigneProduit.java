@@ -2,6 +2,10 @@ package presentation;
 
 //import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import domaine.Commande;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -29,7 +33,7 @@ public class InterfaceLigneProduit extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public InterfaceLigneProduit(Produit produit) {
+	public InterfaceLigneProduit(Produit produit,Commande commande) {
 		this.produit = produit;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 401, 488);
@@ -63,6 +67,11 @@ public class InterfaceLigneProduit extends JFrame {
 		
 		btnNewButton = new JButton("Valider");
 		btnNewButton.setBounds(137, 352, 97, 25);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commande.ajouterProduit(produit.getNumProduit(),(int)comboBox.getSelectedItem(),textField_1.getText());
+			}
+		});
 		contentPane.add(btnNewButton);
 	}
 }
