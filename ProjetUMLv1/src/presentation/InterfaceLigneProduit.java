@@ -70,6 +70,7 @@ public class InterfaceLigneProduit extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				commande.ajouterProduit(produit.getNumProduit(),(int)comboBox.getSelectedItem(),textField_1.getText());
+				dispose();
 			}
 		});
 		contentPane.add(btnNewButton);

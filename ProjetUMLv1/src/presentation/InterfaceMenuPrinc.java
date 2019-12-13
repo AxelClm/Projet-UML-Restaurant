@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import domaine.Catalogue;
-
+import domaine.Commande;
 public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 
 	Catalogue cata;
@@ -17,7 +17,7 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 	JButton valider = new JButton("Valider");
 	JButton clo = new JButton("X");
 	JButton retour = new JButton("Retour");
-
+	JFrame frame;
 	JLabel nca = new JLabel("N° com :");
 	JTextField nc = new JTextField();
 
@@ -27,7 +27,8 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
 	boolean m = false;
 	boolean mr = false;
 	
-	public InterfaceMenuPrinc(Catalogue cata){
+	public InterfaceMenuPrinc(Catalogue cata,JFrame frame){
+		this.frame = frame;
 		this.cata=cata;
 		setLocation(300,0);
 		setSize(900,1030);
@@ -146,8 +147,10 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     	}
 
     	if(source==crc){
-
- 
+    		Commande com = new Commande();
+    		InterfaceCommander a = new InterfaceCommander(cata,com);
+    		a.setVisible(true);
+    		frame.dispose();
     	}
 
     	if(source == mdc){

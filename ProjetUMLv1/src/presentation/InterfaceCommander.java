@@ -2,6 +2,7 @@ package presentation;
 
 //import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import domaine.Controleur;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -97,12 +98,25 @@ public class InterfaceCommander extends JFrame {
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
-		JButton btnNewButton_2 = new JButton("Supprimer");
+		JButton btnNewButton_2 = new JButton("Annuler");
 		btnNewButton_2.setBounds(12, 279, 97, 25);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Controleur.menuP(c);
+			}
+		});
 		panel.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Valider");
 		btnNewButton_3.setBounds(132, 279, 97, 25);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commande.commitCom();
+				dispose();
+				Controleur.menuP(c);
+			}
+		});
 		panel.add(btnNewButton_3);
 	}
 }
