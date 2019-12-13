@@ -44,11 +44,11 @@ public class InterfaceCommander extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public void generateButton(String nom,JPanel panel) {
+	public void generateButton(String nom,JPanel panel,Produit p) {
 		JButton btnNewButton = new JButton(nom);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InterfaceLigneProduit t = new InterfaceLigneProduit();
+				InterfaceLigneProduit t = new InterfaceLigneProduit(p);
 				t.setVisible(true);
 			}
 		});
@@ -76,7 +76,7 @@ public class InterfaceCommander extends JFrame {
 			LinkedList<Produit> listeProd = c.getProduitByCategorie(cat.getIdCategorie());
 			JPanel panel = generatePanel(tabbedPane,cat.getNomCategorie());
 			listeProd.forEach(prod -> {
-				generateButton(prod.getNom(),panel);
+				generateButton(prod.getNom(),panel,prod);
 			});
 		});
 		//Entrées.setLayout(null);
