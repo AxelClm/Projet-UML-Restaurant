@@ -69,37 +69,48 @@ public class BddCom {
 			LienBdd.disconnect(lien);
 			return numCommande;
 			}
-		public static int addRow(int idProduit, int numCommande, String Option , int qte){
+		
+		public static void insertCommande2(int[] idProduit, String[] option, int[] qte, int numCom) {
 			Connection lien = LienBdd.connect();
-			String sql3="SELECT last_insert_rowid();";
-			String sql2 ="INSERT INTO LIGNEPRODUIT"
-					+ "(idProduit,numCommande,"
-					+ "Option,qte) VALUES (";
-			int id = -1;
+			String sql2="INSERT INTO LIGNEPRODUIT"
+					+ "(idLigneProduit,idProduit,numCommande,"
+					+ "Option,qte) VALUES ";
 			try {
 				lien.setAutoCommit(false);
-				lien.prepareStatement(sql2+idProduit+","+numCommande+",\""+Option+"\","+qte+");").executeUpdate();
-				ResultSet  rs = lien.createStatement().executeQuery(sql3);
-				while(rs.next()) {
-					id = rs.getInt(1);
+
+				for(int i=0;i<idProduit.length;i++) {
+					if(i==(idProduit.length -1)) {
+						sql2 = sql2+"(NULL,"+idProduit[i]+","+numCom+",\""+option[i]+"\","+qte[i]+")";
+					}
+					else {
+						sql2 = sql2+"(NULL,"+idProduit[i]+","+numCom+",\""+option[i]+"\","+qte[i]+"),";
+					}
 				}
+				sql2 = sql2+";";
+				System.out.println(sql2);
+				lien.prepareStatement(sql2).executeUpdate();
 				lien.commit();
 			}
 			catch (SQLException e) {
+				System.out.println(e);
 				try {
-				lien.rollback();
+					lien.rollback(); 
 				}
-				catch(SQLException e2) {}
+				catch(SQLException e1){
+					System.out.println(e1);
+				}
+					
+				}
+			LienBdd.disconnect(lien);
 			}
-			return id;
-		}
-		public static void deleteRow(int numRow) {
+		
+		public static void deleteOldCom(int numCom) {
 			Connection lien = LienBdd.connect();
-			String sql = "Delete FROM LigneProduit where idLigneProduit = ?";
+			String sql = "Delete FROM LigneProduit where numCommande = ?";
 			try {
 				lien.setAutoCommit(false);
 				PreparedStatement pStmt = lien.prepareStatement(sql);
-				pStmt.setInt(1,numRow);
+				pStmt.setInt(1,numCom);
 				pStmt.executeUpdate();
 				lien.commit();
 			}
