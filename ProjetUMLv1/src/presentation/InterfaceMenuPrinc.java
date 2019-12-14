@@ -124,11 +124,11 @@ public class InterfaceMenuPrinc extends JPanel implements ActionListener{
     	menuNumCErreur.add(jp);
 		errm.setFont(new Font("Plain",Font.PLAIN,25));
 		errm.setSize(615,40);
-    	errm.setLocation(30,10);
+    	errm.setLocation(50,40);
     	jp.add(errm);
     	
     	retour.setSize(100,50);
-    	retour.setLocation(275,200);
+    	retour.setLocation(250,200);
     	jp.add(retour);
 	}
 	
