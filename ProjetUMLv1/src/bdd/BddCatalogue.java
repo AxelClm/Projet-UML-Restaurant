@@ -13,7 +13,6 @@ public class BddCatalogue {
 		LinkedList<Produit> ListeP = new LinkedList<Produit>();
 		try {
 			rs = lien.createStatement().executeQuery(sql);
-			System.out.println(rs.getFetchSize());
 			while(rs.next()) {
 				ListeP.add(new Produit(rs.getInt("idProduit"),rs.getString("NomProduit"),rs.getDouble("prixProduit"),
 						rs.getInt("catégorieProduit"),rs.getString("description")));

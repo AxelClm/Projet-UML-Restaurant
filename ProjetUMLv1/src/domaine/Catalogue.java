@@ -22,4 +22,15 @@ public class Catalogue {
 	public LinkedList<Categorie> getListeCategorie() {
 		return ListeCategorie;
 	}
+	public Produit getProduitById(int id) {
+		Produit p = null;
+		Iterator<Produit> it = ListeProd.iterator();
+		while(it.hasNext()) {
+			p = it.next();
+			if(p.getNumProduit() == id) {
+				return p;
+			}
+		}
+		return null;
+	}
 }

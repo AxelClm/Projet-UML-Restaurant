@@ -1,7 +1,9 @@
 package presentation;
 
+import java.awt.Color;
 //import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import domaine.Controleur;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,42 +16,37 @@ import java.awt.GridLayout;
 import java.util.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 import domaine.Catalogue;
 import domaine.Categorie;
 import domaine.Produit;
+import domaine.Commande;
+import domaine.LigneProduit;
 @SuppressWarnings("serial")
 public class InterfaceCommander extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
+	private JPanel afficheur;
+	private Commande commande;
+	private Catalogue c;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfaceCommander frame = new InterfaceCommander();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public void generateButton(String nom,JPanel panel,Produit p) {
+	public void generateButton(String nom,JPanel panel,Produit p,Commande commande) {
 		JButton btnNewButton = new JButton(nom);
+		InterfaceCommander frame = this;
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InterfaceLigneProduit t = new InterfaceLigneProduit(p);
+				InterfaceLigneProduit t = new InterfaceLigneProduit(p,commande,frame);
 				t.setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 		panel.add(btnNewButton);
@@ -60,7 +57,33 @@ public class InterfaceCommander extends JFrame {
 		jpanel.setLayout(new GridLayout(0,3));
 		return jpanel;
 	}
-	public InterfaceCommander() {
+	public void generateButtons2(JPanel jp , LigneProduit lprod , JFrame frame) {
+		String nom =" "+lprod.getNumLp()+" "+c.getProduitById(lprod.getNumProduit()).getNom()+" x"
+				+lprod.getQte();
+		JButton btn = new JButton(nom);
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InterfaceLigneProduit t = new InterfaceLigneProduit(lprod,commande,(InterfaceCommander)frame,c.getProduitById(lprod.getNumProduit()).getNom());
+				t.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		jp.add(btn);
+		this.repaint();
+	}
+	public void updateAfficheur() {
+		LinkedList<LigneProduit> lProd = commande.getListeLp();
+		afficheur.removeAll();
+		afficheur.setLayout(new GridLayout(0,1));
+		JFrame jf = this;
+		lProd.forEach(lprod ->{
+			generateButtons2(afficheur,lprod,jf);
+		});
+		this.repaint();
+	}
+	public InterfaceCommander(Catalogue c ,Commande commande) {
+		this.commande = commande;
+		this.c=c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 816, 540);
 		contentPane = new JPanel();
@@ -70,13 +93,12 @@ public class InterfaceCommander extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(12, 118, 508, 347);
 		contentPane.add(tabbedPane);
-		Catalogue c = new Catalogue();
 		LinkedList<Categorie> listeC = c.getListeCategorie();
 		listeC.forEach(cat -> {
 			LinkedList<Produit> listeProd = c.getProduitByCategorie(cat.getIdCategorie());
 			JPanel panel = generatePanel(tabbedPane,cat.getNomCategorie());
 			listeProd.forEach(prod -> {
-				generateButton(prod.getNom(),panel,prod);
+				generateButton(prod.getNom(),panel,prod,commande);
 			});
 		});
 		//Entrées.setLayout(null);
@@ -104,17 +126,31 @@ public class InterfaceCommander extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(12, 13, 217, 239);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JButton btnNewButton_2 = new JButton("Supprimer");
+		afficheur = new JPanel();
+		afficheur.setBackground(Color.white);
+		JScrollPane js = new JScrollPane(afficheur);
+		js.setBounds(12, 13, 217, 239);
+		updateAfficheur();
+		panel.add(js);
+		JButton btnNewButton_2 = new JButton("Annuler");
 		btnNewButton_2.setBounds(12, 279, 97, 25);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				Controleur.menuP(c);
+			}
+		});
 		panel.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Valider");
 		btnNewButton_3.setBounds(132, 279, 97, 25);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commande.commitCom();
+				dispose();
+				Controleur.menuP(c);
+			}
+		});
 		panel.add(btnNewButton_3);
 	}
 }

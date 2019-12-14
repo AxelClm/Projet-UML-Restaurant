@@ -7,7 +7,7 @@ import domaine.Commande;
 public class BddCom {
 		public static Commande getCommande(int numCommande) {
 			Connection lien = LienBdd.connect();
-			String sql = "Select Produit.idProduit,Produit.nomProduit,Produit.prixProduit,Produit.catégorieProduit,Produit.enVente\r\n" + 
+			String sql = "Select Produit.idProduit,LigneProduit.qte,LigneProduit.Option\r\n" + 
 					"FROM Produit,LigneProduit\r\n" + 
 					"Where LigneProduit.numCommande = ? AND Produit.idProduit = LigneProduit.idProduit;";
 			ResultSet rs = null;
@@ -17,7 +17,7 @@ public class BddCom {
 				PreparedStatement pStmt = lien.prepareStatement(sql);
 				pStmt.setInt(1,numCommande);
 				rs = pStmt.executeQuery();
-				c = new Commande(rs);
+				c = new Commande(rs,numCommande);
 			}
 			catch (SQLException e) {
 				System.out.println(e);
