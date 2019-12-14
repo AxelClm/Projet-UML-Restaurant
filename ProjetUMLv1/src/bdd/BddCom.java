@@ -7,7 +7,7 @@ import domaine.Commande;
 public class BddCom {
 		public static Commande getCommande(int numCommande) {
 			Connection lien = LienBdd.connect();
-			String sql = "Select Produit.idProduit,LigneProduit.qte,>LigneProduit.Option\r\n" + 
+			String sql = "Select Produit.idProduit,LigneProduit.qte,LigneProduit.Option\r\n" + 
 					"FROM Produit,LigneProduit\r\n" + 
 					"Where LigneProduit.numCommande = ? AND Produit.idProduit = LigneProduit.idProduit;";
 			ResultSet rs = null;
