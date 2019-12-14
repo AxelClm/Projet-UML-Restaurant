@@ -18,11 +18,14 @@ public class Commande {
 		while(rS.next()) {
 			int numP = rS.getInt("idProduit");
 			int qte = rS.getInt("qte");
-			String opt = rS.getString("Optiion");
+			String opt = rS.getString("Option");
 			ajouterProduit(numP,qte,opt);
 		}
 		this.numCom=numCom;
 		reccup = true;
+	}
+	public LinkedList<LigneProduit> getListeLp() {
+		return listeLp;
 	}
 	public Commande(){
 			//Pour quand on créé une commande sans qu'elle soit dans la BDD
